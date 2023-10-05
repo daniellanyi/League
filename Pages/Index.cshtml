@@ -1,0 +1,44 @@
+﻿@page
+@model IndexModel
+@using League.Models
+@{
+  ViewData["Title"] = "Home page";
+}
+
+<div class="text-center d-flex align-items-center justify-content-center" style="background-image: url('/image/nfl/nfl_stadium.jpeg'); height: 25vh; background-position-y:40%;">
+    <div class="flex-grow-1 text-white banner-style h-100">
+        <img src="/image/nfl/nfl.png" alt="Banner Image" class="img-fluid" />
+        <h1 class="banner-text-style">Welcome to the National Football League!</h1>
+    </div>
+</div>
+<div class="d-flex justify-content-between">
+    <h4 class="p-2">Season 2019-2020</h4>
+    <form method="get" id="viewModeForm">
+        <label asp-for="ViewMode">Select View Mode:</label>
+        <select id="viewModeSelect" asp-for="ViewMode" onchange="this.form.submit()">
+            <option value="Division">Division</option>
+            <option value="Conference">Conference</option>
+            <option value="League">League</option>
+        </select>
+    </form>
+    <form id="favouriteForm">
+        <div class="form-group pr-2 d-flex">
+            <label class="col-form-label control-label" asp-for="FavouriteTeam">Favorite:</label>
+            <select id="favouriteSelect" class="form-control" asp-for="FavouriteTeam" asp-items="Model.AllTeams" onchange="this.form.submit();">
+                <option value="">None</option>
+            </select>
+        </div>
+    </form>
+</div>
+@{await Html.RenderPartialAsync(ViewData["PartialViewRoute"] as string);}
+<style>
+    .banner-text-style {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        color: #E0E0E0;
+    }
+
+    .banner-style {
+        background-color: rgba(0, 0, 128, 0.3);
+    }
+</style>
+

@@ -1,0 +1,50 @@
+<div class="text-center d-flex align-items-center justify-content-center" style="height: 25vh;">
+    <div class="flex-grow-1 text-white banner-style h-100">
+        <div id="colors-container" class="h-100">
+            <div class="trapezoid-1"></div>
+            <div class="trapezoid-2"></div>
+            <div class="banner-text position-absolute">
+                <h1>@ViewData["BannerTitle"]</h1>
+                <div>@ViewData["BannerInfo1"]</div>
+                <div>@ViewData["BannerInfo2"]</div>
+            </div>
+            <img src=@(ViewData["BannerImage"]) alt="Banner Image" class="position-absolute banner-image">
+        </div>
+    </div>
+</div>
+
+<style>
+    #colors-container{
+        background-color: @ViewData["BannerColor3"];
+        height: 30px;
+    }
+    .trapezoid-1 {
+        width: 700.5px;
+        height: 232.75px;
+        background-color: @ViewData["BannerColor1"];
+        z-index: 1;
+        clip-path: polygon(0 0, 100% 0, 640.5px 100%, 0% 100%);
+        position: absolute;
+    }
+    .trapezoid-2 {
+        width: 454.5px;
+        height: 232.75px;
+        background-color: @ViewData["BannerColor2"];
+        z-index: 2;
+        clip-path: polygon(60px 0, 100% 0, 100% 100%, 0 100%);
+        position: absolute;
+        margin-left: 655.5px;
+    }
+    .banner-text {
+        text-align: left;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        color: black;
+        z-index: 3;
+    }
+
+    .banner-image {
+        height: 200px;
+        width: 200px;
+        z-index: 3;
+    }
+</style>

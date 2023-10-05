@@ -1,0 +1,94 @@
+@page "{PageNumber?}"
+@model IndexModel
+
+@{
+  ViewData["Title"] = "NFL Players";
+}
+
+<div class="text-center d-flex align-items-center justify-content-center" style="background-image: url('/image/nfl/nfl_stadium.jpeg'); height: 25vh; background-position-y:40%;">
+    <div class="flex-grow-1 text-white banner-style h-100">
+        <h2 class="mr-auto display-3 banner-text-style"><img src="/image/nfl/nfl.png"> Players</h2>
+        <form class="d-flex justify-content-center">
+            <div class="form-group pr-2">
+                <label class="col-form-label control-label" asp-for="SelectedTeam">Team:</label>
+                <select class="form-control" asp-for="SelectedTeam" asp-items="Model.Teams" onchange="this.form.submit();">
+                    <option value="">All</option>
+                </select>
+            </div>
+            <div class="form-group pr-2">
+                <label class="col-form-label control-label" asp-for="SelectedPosition">Position:</label>
+                <select class="form-control" asp-for="SelectedPosition" asp-items="Model.Positions" onchange="this.form.submit();">
+                    <option value="">All</option>
+                </select>
+            </div>
+            <div class="form-group pr-2">
+                <label class="col-form-label control-label" asp-for="SearchString">Name:</label>
+                <input class="form-control" type="text" asp-for="SearchString" />
+                <input class="form-control btn btn-primary btn-sm mr-auto" type="submit" value="Search" />
+            </div>
+            <div class="form-group">
+                <label class="col-form-label control-label" asp-for="SortField">Sort by:</label>
+                <select class="form-control" asp-for="SortField" onchange="this.form.submit();">
+                    <option value="Number">Number</option>
+                    <option value="Name">Name</option>
+                    <option value="Position">Position</option>
+                </select>
+            </div>
+        </form>
+    </div>
+</div>
+<section class="grid container">
+    <table class="p-2">
+        <thead>
+            <tr class="d-flex p-1 align-items-center justify-content-between">
+                <th style="flex:0 0 10%">Number</th>
+                <th style="flex:0 0 25%">Name</th>
+                <th style="flex:0 0 10%">Position</th>
+                <th style="flex:0 0 20%">Experience</th>
+                <th style="flex:0 0 25%">College</th>
+                <th style="flex:0 0 10%">Depth</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (Player Player in Model.Players) {
+                <tr class="@(Model.PlayerClass(Player))" onclick="window.location.href = '/Players/Player/@Player.PlayerId';">
+                    <td style="flex:0 0 10%">@Player.Number</td>
+                    <td style="flex:0 0 25%">@Player.Name</td>
+                    <td style="flex:0 0 10%">@Player.Position</td>
+                    <td style="flex:0 0 20%">@Player.Experience</td>
+                    <td style="flex:0 0 25%">@Player.College</td>
+                    <td style="flex:0 0 10%">@Player.Depth</td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>
+<div class="text-center mt-3">
+    <ul class="pagination">
+        @if (Model.CurrentPage > 1)
+        {
+        <li class="page-item">
+            <a class="page-link" href="/Players/?PageNumber=@(Model.CurrentPage - 1)">Previous</a>
+        </li>
+        }
+
+        @if (Model.CurrentPage < Model.LastPage)
+        {
+        <li class="page-item">
+            <a class="page-link" href="/Players/?PageNumber=@(Model.CurrentPage + 1)">Next</a>
+        </li>
+        }
+    </ul>
+</div>
+<style>
+    .banner-text-style {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        color: #E0E0E0;
+    }
+
+    .banner-style {
+        background-color: rgba(0, 0, 128, 0.3);
+    }
+</style>

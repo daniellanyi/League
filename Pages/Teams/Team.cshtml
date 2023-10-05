@@ -1,0 +1,57 @@
+@page "{id}"
+@model TeamModel
+@using League.Models
+@{
+    ViewData["BannerTitle"] = $"{@Model.Team.Location} {@Model.Team.Name}";
+    ViewData["BannerInfo1"] = $"Record: {@Model.Team.Win}-{@Model.Team.Loss}-{@Model.Team.Tie}";
+    ViewData["BannerInfo2"] = $"{Model.Team.Division.ConferenceId} - {@Model.Team.DivisionId}";
+    ViewData["BannerImage"] = $"/image/nfl/logo/{@Model.Team.TeamId}.png";
+    ViewData["BannerColor1"] = @Model.Team.Color1;
+    ViewData["BannerColor2"] = @Model.Team.Color2;
+    ViewData["BannerColor3"] = @Model.Team.Color3;
+}
+
+
+@{await Html.RenderPartialAsync("_TeamBannerPartial");}
+<div class="d-flex justify-content-between pb-2">
+    <div>
+        <div>@Model.Team.Stadium Stadium</div>
+        <div>Capacity: @Model.Team.Capacity</div>
+        <hr />
+        <div>@Model.Team.Address</div>
+        <div class="pb-2">@Model.Team.City, @Model.Team.State @Model.Team.Zip</div>
+        <img src="/image/nfl/stadium/@(Model.Team.TeamId).jpg">
+    </div>
+    <img src="/image/nfl/seating/@(Model.Team.TeamId).png">
+</div>
+<section class="grid container">
+    <table class="p-2">
+        <thead>
+            <tr class="d-flex p-1 align-items-center justify-content-between">
+                <th style="flex:0 0 10%">Number</th>
+                <th style="flex:0 0 25%">Name</th>
+                <th style="flex:0 0 10%">Position</th>
+                <th style="flex:0 0 20%">Experience</th>
+                <th style="flex:0 0 25%">College</th>
+                <th style="flex:0 0 10%">Depth</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (Player Player in Model.Team.Players) {
+                <tr class="@(Player.Depth == 1 ? "starter" : "") d-flex" onclick="window.location.href = '/Players/Player/@Player.PlayerId';">
+                    <td style="flex:0 0 10%">@Player.Number</td>
+                    <td style="flex:0 0 25%">@Player.Name</td>
+                    <td style="flex:0 0 10%">@Player.Position</td>
+                    <td style="flex:0 0 20%">@Player.Experience</td>
+                    <td style="flex:0 0 25%">@Player.College</td>
+                    <td style="flex:0 0 10%">@Player.Depth</td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>
+
+
+

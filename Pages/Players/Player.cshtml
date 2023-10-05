@@ -1,0 +1,27 @@
+@page "{id}"
+@model PlayerModel
+
+@{
+    ViewData["BannerTitle"] = $"{@Model.Player.Number} {@Model.Player.Name}";
+    ViewData["BannerInfo1"] = $"Rating: {@Model.Player.Rating}";
+    ViewData["BannerInfo2"] = $"Position: {@Model.Player.Position}";
+    ViewData["BannerImage"] = $"/image/nfl/logo/{@Model.Player.TeamId}.png";
+    ViewData["BannerColor1"] = @Model.Team.Color1;
+    ViewData["BannerColor2"] = @Model.Team.Color2;
+    ViewData["BannerColor3"] = @Model.Team.Color3;
+}
+
+
+@{await Html.RenderPartialAsync("_TeamBannerPartial");}
+
+<div>Rank: @Model.Player.Rank</div>
+<div>Depth: @Model.Player.Depth</div>
+<hr />
+<div>Experience: @Model.Player.Experience</div>
+<div>College: @Model.Player.College</div>
+<div>Draft: @Model.Player.DraftYear - @Model.Player.DraftRound - @Model.Player.DraftPick</div>
+<hr />
+<div>Height: @Model.Player.Height</div>
+<div>Weight: @Model.Player.Weight</div>
+<div>Age @Model.Player.Age</div>
+<div>Birthday: @Model.Player.BirthDate</div>

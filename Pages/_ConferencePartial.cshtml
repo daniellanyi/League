@@ -1,0 +1,43 @@
+@model IndexModel
+<section class="grid">
+    @{
+        bool firstConf = true;
+        foreach (Conference Conference in Model.Conferences) {
+            if (firstConf == true)
+            {
+                firstConf = false;
+        <h4 class="p-2">@Conference.Name</h4>
+            }
+            else
+            {
+        <br />
+        <h4 class="p-2">@Conference.Name</h4>
+            }
+        <table class="p-2">
+            <thead>
+                <tr class="d-flex p-1 align-items-center justify-content-between">
+                    <th style="flex:0 0 25%">Team</th>
+                    <th style="flex:0 0 5%">W</th>
+                    <th style="flex:0 0 5%">L</th>
+                    <th style="flex:0 0 5%">T</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Team Team in Model.GetTeamsFromConference(Conference.ConferenceId)) {
+                <tr asp-page="/Teams/Team" asp-route-id="@Team.TeamId" class="d-flex p-1 align-items-center justify-content-between @(Team.TeamId == Model.FavouriteTeam ? "favorite" : "")" style="height: 34px;" onclick="window.location.href = '/Teams/Team/@Team.TeamId';">
+                    <td style="flex:0 0 25%">
+                        <div class="d-flex align-items-center">
+                            <img src="/image/nfl/logo/@(Team.TeamId).png" width="30" height="32">
+                            <div>@Team.Name</div>
+                        </div>
+                    </td>
+                    <td style="flex:0 0 5%">@Team.Win</td>
+                    <td style="flex:0 0 5%">@Team.Loss</td>
+                    <td style="flex:0 0 5%">@Team.Tie</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        }
+    }
+</section>
